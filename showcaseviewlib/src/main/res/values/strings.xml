@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ShowCaseViewLib</string>
+    <string name="label_skip">بلدم!</string>
+    <string name="label_next">بعدی</string>
 </resources>

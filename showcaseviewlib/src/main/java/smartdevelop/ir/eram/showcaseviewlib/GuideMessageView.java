@@ -9,11 +9,11 @@ import android.graphics.Typeface;
 import android.text.Spannable;
 import android.util.TypedValue;
 import android.view.Gravity;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import static android.view.Gravity.CENTER;
 
 /**
  * Created by Mohammad Reza Eram  on 20/01/2018.
@@ -27,8 +27,8 @@ class GuideMessageView extends LinearLayout {
     private TextView mTitleTextView;
     private TextView mContentTextView;
     private LinearLayout navContainer;
-    private Button nextButton;
-    private Button skipButton;
+    private TextView next;
+    private TextView skip;
 
 
     GuideMessageView(Context context) {
@@ -37,7 +37,7 @@ class GuideMessageView extends LinearLayout {
         float density = context.getResources().getDisplayMetrics().density;
         setWillNotDraw(false);
         setOrientation(VERTICAL);
-        setGravity(Gravity.CENTER);
+        setGravity(CENTER);
 
         mRect = new RectF();
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -56,17 +56,24 @@ class GuideMessageView extends LinearLayout {
         navContainer.setOrientation(HORIZONTAL);
         navContainer.setPadding(padding, paddingBetween, padding, padding);
 
-        skipButton = new Button(context);
-        skipButton.setText("skip");
-        skipButton.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        navContainer.addView(skipButton);
+        skip = new TextView(context);
+        skip.setText(context.getResources().getString(R.string.label_skip));
+        LayoutParams skipParam =
+                new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        skipParam.weight = .5f;
+        skip.setLayoutParams(skipParam);
+        skip.setGravity(CENTER);
+        navContainer.addView(skip);
 
-        nextButton = new Button(context);
-        nextButton.setText("next");
-        nextButton.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        navContainer.addView(nextButton);
+        next = new TextView(context);
+        next.setText(context.getResources().getString(R.string.label_next));
+        LayoutParams nextParams = new LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT);
+        nextParams.weight = .5f;
+        next.setLayoutParams(nextParams);
+        next.setGravity(CENTER);
+        navContainer.addView(next);
 
-        addView(navContainer, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        addView(navContainer, new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void addContent(Context context, int padding, int paddingBetween) {
@@ -74,14 +81,14 @@ class GuideMessageView extends LinearLayout {
         mContentTextView.setTextColor(Color.BLACK);
         mContentTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mContentTextView.setPadding(padding, paddingBetween, padding, padding);
-        mContentTextView.setGravity(Gravity.CENTER);
+        mContentTextView.setGravity(CENTER);
         addView(mContentTextView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
     private void addTitle(Context context, int padding, int paddingBetween) {
         mTitleTextView = new TextView(context);
         mTitleTextView.setPadding(padding, padding, padding, paddingBetween);
-        mTitleTextView.setGravity(Gravity.CENTER);
+        mTitleTextView.setGravity(CENTER);
         mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
         mTitleTextView.setTextColor(Color.BLACK);
         addView(mTitleTextView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -149,12 +156,12 @@ class GuideMessageView extends LinearLayout {
     }
 
     protected void setOnNextClicked(OnClickListener clickListener) {
-        if (nextButton != null)
-            nextButton.setOnClickListener(clickListener);
+        if (next != null)
+            next.setOnClickListener(clickListener);
     }
 
     protected void setOnSkipClicked(OnClickListener clickListener) {
-        if (skipButton != null)
-            skipButton.setOnClickListener(clickListener);
+        if (skip != null)
+            skip.setOnClickListener(clickListener);
     }
 }
