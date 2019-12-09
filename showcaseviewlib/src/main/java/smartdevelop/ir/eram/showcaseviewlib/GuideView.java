@@ -16,13 +16,13 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.Xfermode;
-import android.os.Build;
 import android.text.Spannable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
@@ -38,26 +38,26 @@ public class GuideView extends FrameLayout {
 
     static final String TAG = "GuideView";
 
-    private static final int INDICATOR_HEIGHT              = 40;
-    private static final int MESSAGE_VIEW_PADDING          = 5;
-    private static final int SIZE_ANIMATION_DURATION       = 700;
-    private static final int APPEARING_ANIMATION_DURATION  = 400;
-    private static final int CIRCLE_INDICATOR_SIZE         = 6;
-    private static final int LINE_INDICATOR_WIDTH_SIZE     = 3;
-    private static final int STROKE_CIRCLE_INDICATOR_SIZE  = 3;
-    private static final int RADIUS_SIZE_TARGET_RECT       = 15;
-    private static final int MARGIN_INDICATOR              = 15;
+    private static final int INDICATOR_HEIGHT = 40;
+    private static final int MESSAGE_VIEW_PADDING = 5;
+    private static final int SIZE_ANIMATION_DURATION = 700;
+    private static final int APPEARING_ANIMATION_DURATION = 400;
+    private static final int CIRCLE_INDICATOR_SIZE = 6;
+    private static final int LINE_INDICATOR_WIDTH_SIZE = 3;
+    private static final int STROKE_CIRCLE_INDICATOR_SIZE = 3;
+    private static final int RADIUS_SIZE_TARGET_RECT = 15;
+    private static final int MARGIN_INDICATOR = 15;
 
-    private static final int BACKGROUND_COLOR              = 0x99000000;
-    private static final int CIRCLE_INNER_INDICATOR_COLOR  = 0xffcccccc;
-    private static final int CIRCLE_INDICATOR_COLOR        = Color.WHITE;
-    private static final int LINE_INDICATOR_COLOR          = Color.WHITE;
+    private static final int BACKGROUND_COLOR = 0x99000000;
+    private static final int CIRCLE_INNER_INDICATOR_COLOR = 0xffcccccc;
+    private static final int CIRCLE_INDICATOR_COLOR = Color.WHITE;
+    private static final int LINE_INDICATOR_COLOR = Color.WHITE;
 
-    private final Paint selfPaint           = new Paint();
-    private final Paint paintLine           = new Paint();
-    private final Paint paintCircle         = new Paint();
-    private final Paint paintCircleInner    = new Paint();
-    private final Paint targetPaint         = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Paint selfPaint = new Paint();
+    private final Paint paintLine = new Paint();
+    private final Paint paintCircle = new Paint();
+    private final Paint paintCircleInner = new Paint();
+    private final Paint targetPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private final Xfermode X_FER_MODE_CLEAR = new PorterDuffXfermode(PorterDuff.Mode.CLEAR);
 
     private View target;
@@ -74,7 +74,7 @@ public class GuideView extends FrameLayout {
     private float circleIndicatorSizeFinal;
     private float circleInnerIndicatorSize = 0;
     private float lineIndicatorWidthSize;
-    private int   messageViewPadding;
+    private int messageViewPadding;
     private float marginGuide;
     private float strokeCircleWidth;
     private float indicatorHeight;
@@ -113,10 +113,7 @@ public class GuideView extends FrameLayout {
         ViewTreeObserver.OnGlobalLayoutListener layoutListener = new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
-                if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN)
-                    getViewTreeObserver().removeOnGlobalLayoutListener(this);
-                else
-                    getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                getViewTreeObserver().removeGlobalOnLayoutListener(this);
 
                 setMessageLocation(resolveMessageViewLocation());
                 int[] locationTarget = new int[2];
@@ -318,7 +315,7 @@ public class GuideView extends FrameLayout {
         postInvalidate();
     }
 
-    public void updateGuideViewLocation(){
+    public void updateGuideViewLocation() {
         requestLayout();
     }
 
