@@ -9,7 +9,9 @@ import android.graphics.Typeface;
 import android.text.Spannable;
 import android.util.TypedValue;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,6 +26,9 @@ class GuideMessageView extends LinearLayout {
 
     private TextView mTitleTextView;
     private TextView mContentTextView;
+    private LinearLayout navContainer;
+    private Button nextButton;
+    private Button skipButton;
 
 
     GuideMessageView(Context context) {
@@ -41,19 +46,45 @@ class GuideMessageView extends LinearLayout {
         final int padding = (int) (10 * density);
         final int paddingBetween = (int) (3 * density);
 
-        mTitleTextView = new TextView(context);
-        mTitleTextView.setPadding(padding, padding, padding, paddingBetween);
-        mTitleTextView.setGravity(Gravity.CENTER);
-        mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
-        mTitleTextView.setTextColor(Color.BLACK);
-        addView(mTitleTextView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        addTitle(context, padding, paddingBetween);
+        addContent(context, padding, paddingBetween);
+        addButtons(context, padding, paddingBetween);
+    }
 
+    private void addButtons(Context context, int padding, int paddingBetween) {
+        navContainer = new LinearLayout(context);
+        navContainer.setOrientation(HORIZONTAL);
+        navContainer.setPadding(padding, paddingBetween, padding, padding);
+
+        skipButton = new Button(context);
+        skipButton.setText("skip");
+        skipButton.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        navContainer.addView(skipButton);
+
+        nextButton = new Button(context);
+        nextButton.setText("next");
+        nextButton.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        navContainer.addView(nextButton);
+
+        addView(navContainer, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+
+    private void addContent(Context context, int padding, int paddingBetween) {
         mContentTextView = new TextView(context);
         mContentTextView.setTextColor(Color.BLACK);
         mContentTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 14);
         mContentTextView.setPadding(padding, paddingBetween, padding, padding);
         mContentTextView.setGravity(Gravity.CENTER);
         addView(mContentTextView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+    }
+
+    private void addTitle(Context context, int padding, int paddingBetween) {
+        mTitleTextView = new TextView(context);
+        mTitleTextView.setPadding(padding, padding, padding, paddingBetween);
+        mTitleTextView.setGravity(Gravity.CENTER);
+        mTitleTextView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 18);
+        mTitleTextView.setTextColor(Color.BLACK);
+        addView(mTitleTextView, new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
     }
 
 
@@ -115,5 +146,15 @@ class GuideMessageView extends LinearLayout {
 
 
         canvas.drawRoundRect(mRect, 15, 15, mPaint);
+    }
+
+    protected void setOnNextClicked(OnClickListener clickListener) {
+        if (nextButton != null)
+            nextButton.setOnClickListener(clickListener);
+    }
+
+    protected void setOnSkipClicked(OnClickListener clickListener) {
+        if (skipButton != null)
+            skipButton.setOnClickListener(clickListener);
     }
 }

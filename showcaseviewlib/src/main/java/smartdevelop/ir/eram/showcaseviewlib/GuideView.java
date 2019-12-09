@@ -22,7 +22,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.AlphaAnimation;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import smartdevelop.ir.eram.showcaseviewlib.config.DismissType;
@@ -133,10 +132,23 @@ public class GuideView extends FrameLayout {
                 startYLineAndCircle = (isTop ? targetRect.bottom : targetRect.top) + marginGuide;
                 stopY = yMessageView + indicatorHeight;
                 startAnimationSize();
-                getViewTreeObserver().addOnGlobalLayoutListener(this);
             }
         };
         getViewTreeObserver().addOnGlobalLayoutListener(layoutListener);
+
+        mMessageView.setOnNextClicked(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
+
+        mMessageView.setOnSkipClicked(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                skip();
+            }
+        });
     }
 
     private void startAnimationSize() {
@@ -264,6 +276,14 @@ public class GuideView extends FrameLayout {
         mIsShowing = false;
         if (mGuideListener != null) {
             mGuideListener.onDismiss(target);
+        }
+    }
+
+    public void skip() {
+        ((ViewGroup) ((Activity) getContext()).getWindow().getDecorView()).removeView(this);
+        mIsShowing = false;
+        if (mGuideListener != null) {
+            mGuideListener.onSkip(target);
         }
     }
 

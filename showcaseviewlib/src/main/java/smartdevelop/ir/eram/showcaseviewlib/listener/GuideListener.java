@@ -4,4 +4,6 @@ import android.view.View;
 
 public interface GuideListener {
     void onDismiss(View view);
+
+    void onSkip(View target);
 }
